@@ -48,7 +48,7 @@ function renderCards() {
     
     // Card back image
     const backImg = document.createElement('img');
-    backImg.src = '/card-back.jpg';
+    backImg.src = '/card-back-h.jpg';
     backImg.alt = 'Card Back';
     backImg.className = 'card-back';
     
