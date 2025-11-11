@@ -4,7 +4,7 @@ const app = express();
 const PORT = 3000;
 
 // Serve static files (card images, CSS, JS)
-app.use('/cards', express.static('cards'));
+app.use('/cards', express.static('cards_halloween'));
 app.use(express.static('public'));
 
 // API endpoint to get 5 random cards
