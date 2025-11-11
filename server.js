@@ -9,7 +9,7 @@ app.use(express.static('public'));
 
 // API endpoint to get 5 random cards
 app.get('/api/random-cards', (req, res) => {
-  const totalCards = 32;
+  const totalCards = 36;
   const cardCount = 5;
   const selectedCards = [];
   
