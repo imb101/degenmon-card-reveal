@@ -1,0 +1,365 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: url('/background.jpg') center/cover no-repeat fixed;
+  background-color: #1a1a2e;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 0;
+  transition: background 0.3s;
+  pointer-events: none;
+}
+
+.container {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  width: 100%;
+  padding: 20px;
+}
+
+h1 {
+  color: white;
+  margin-bottom: 20px;
+  font-size: 3em;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.redeal-btn {
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  border: none;
+  padding: 15px 40px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #1a1a2e;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+  transition: all 0.3s ease;
+  margin-bottom: 30px;
+}
+
+.redeal-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
+}
+
+.redeal-btn:active {
+  transform: translateY(0);
+}
+
+.card-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  flex-wrap: nowrap;
+}
+
+.card-wrapper {
+  width: 200px;
+  height: 280px;
+  perspective: 1000px;
+  cursor: pointer;
+  transition: transform 0.2s ease-out, z-index 0s, width 0s, height 0s, top 0s, left 0s;
+  animation: flyIn 0.6s ease-out forwards;
+  opacity: 0;
+  z-index: 1;
+}
+
+.card-wrapper.zoomed {
+  position: fixed !important;
+  top: 10vh !important;
+  left: 50% !important;
+  width: auto !important;
+  height: 80vh !important;
+  transform: translateX(-50%) !important;
+  z-index: 1001 !important;
+  transition: all 0.4s ease-out !important;
+  perspective: 2000px;
+  margin: 0 !important;
+}
+
+.card-wrapper.zoomed .card {
+  width: auto !important;
+  height: 100% !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+}
+
+.card-wrapper.zoomed .card img {
+  width: auto !important;
+  height: 100% !important;
+  max-height: 80vh;
+}
+
+/* Overlay to block clicks on other cards when zoomed */
+.zoom-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  cursor: pointer;
+  pointer-events: all;
+}
+
+.card-wrapper.fly-out {
+  animation: flyOut 0.4s ease-in forwards;
+}
+
+@keyframes flyIn {
+  from {
+    opacity: 0;
+    transform: translateY(-100vh) rotate(-15deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes flyOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(100vh) rotate(15deg);
+  }
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10;
+  transition: opacity 0.3s;
+}
+
+.card-wrapper.zoomed .card::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+}
+
+/* Holographic effect for rare cards */
+.card.rare::before {
+  background: linear-gradient(
+    45deg,
+    rgba(255, 0, 255, 0.3) 0%,
+    rgba(0, 255, 255, 0.3) 25%,
+    rgba(255, 255, 0, 0.3) 50%,
+    rgba(0, 255, 0, 0.3) 75%,
+    rgba(255, 0, 255, 0.3) 100%
+  );
+  background-size: 200% 200%;
+  animation: holographic 3s linear infinite;
+}
+
+.card.rare.flipped::before {
+  opacity: 1;
+}
+
+/* Shiny sparkle effect for epic cards */
+.card.epic::before {
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.6) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.8) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(255, 215, 0, 0.5) 0%, transparent 50%);
+  background-size: 200% 200%;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+.card.epic.flipped::before {
+  opacity: 1;
+}
+
+/* Rainbow holographic for legendary cards */
+.card.legendary::before {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 0, 0, 0.4),
+    rgba(255, 154, 0, 0.4),
+    rgba(208, 222, 33, 0.4),
+    rgba(79, 220, 74, 0.4),
+    rgba(63, 218, 216, 0.4),
+    rgba(47, 201, 226, 0.4),
+    rgba(28, 127, 238, 0.4),
+    rgba(95, 21, 242, 0.4),
+    rgba(186, 12, 248, 0.4),
+    rgba(251, 7, 217, 0.4)
+  );
+  background-size: 300% 300%;
+  animation: rainbow 4s linear infinite;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+}
+
+.card.legendary.flipped::before {
+  opacity: 1;
+}
+
+@keyframes holographic {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    background-position: 0% 0%;
+    opacity: 0.6;
+  }
+  50% {
+    background-position: 100% 100%;
+    opacity: 1;
+  }
+}
+
+@keyframes rainbow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  border: 3px solid #ffd700;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.card img.card-front {
+  transform: rotateY(180deg);
+}
+
+.card-wrapper:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.card-wrapper:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.card-wrapper:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.card-wrapper:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+.card-wrapper:nth-child(5) {
+  animation-delay: 0.4s;
+}
+
+.card-wrapper.fly-out:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.card-wrapper.fly-out:nth-child(2) {
+  animation-delay: 0.05s;
+}
+
+.card-wrapper.fly-out:nth-child(3) {
+  animation-delay: 0.1s;
+}
+
+.card-wrapper.fly-out:nth-child(4) {
+  animation-delay: 0.15s;
+}
+
+.card-wrapper.fly-out:nth-child(5) {
+  animation-delay: 0.2s;
+}
+
+@media (max-width: 1200px) {
+  .card-wrapper {
+    width: 160px;
+    height: 224px;
+  }
+  
+  .card-container {
+    gap: 15px;
+  }
+}
+
+@media (max-width: 900px) {
+  .card-wrapper {
+    width: 140px;
+    height: 196px;
+  }
+  
+  .card-container {
+    gap: 10px;
+  }
+  
+  h1 {
+    font-size: 2em;
+  }
+}
