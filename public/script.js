@@ -119,7 +119,7 @@ function toggleZoom(wrapper) {
     const overlay = document.createElement('div');
     overlay.className = 'zoom-overlay';
     overlay.addEventListener('click', () => toggleZoom(wrapper));
-    wrapper.parentNode.insertBefore(overlay, wrapper);
+    //wrapper.parentNode.insertBefore(overlay, wrapper);
   }
 }
 
