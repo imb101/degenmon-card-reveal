@@ -1,0 +1,23 @@
+{
+  "monstandard": {
+    "name": "Degenmon - Standard Pack",
+    "totalCards": 41,
+    "folder": "degenmon-standard",
+    "cardBack": "card-back.jpg"
+  },
+  "monhalloween": {
+    "name": "Degenmon - Halloween Pack",
+    "totalCards": 41,
+    "folder": "degenmon-halloween",
+    "cardBack": "card-back-h.jpg"
+  },
+  "dtgstandard": {
+    "name": "Degen the Gathering - Standard Pack",
+    "totalCards": 44,
+    "folder": "dtg-standard",
+    "cardBack": "card-back-dtg.jpg"
+  }
+}
+
+
+ 
