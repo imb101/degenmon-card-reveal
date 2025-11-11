@@ -23,17 +23,32 @@ document.addEventListener('DOMContentLoaded', () => {
 async function loadPacks() {
   try {
     const response = await fetch('/api/packs');
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
     availablePacks = await response.json();
+    
+    console.log('Loaded packs:', availablePacks);
     
     const select = document.getElementById('pack-select');
     select.innerHTML = '';
     
-    Object.keys(availablePacks).forEach(packId => {
+    const packKeys = Object.keys(availablePacks);
+    if (packKeys.length === 0) {
+      console.error('No packs available');
+      select.innerHTML = '<option>No packs available</option>';
+      return;
+    }
+    
+    packKeys.forEach(packId => {
       const option = document.createElement('option');
       option.value = packId;
       option.textContent = availablePacks[packId].name;
       select.appendChild(option);
     });
+    
+    // Set current pack to first available
+    currentPack = packKeys[0];
     
     select.addEventListener('change', (e) => {
       currentPack = e.target.value;
@@ -41,9 +56,11 @@ async function loadPacks() {
     });
     
     // Load initial cards
+    console.log('Loading initial cards from pack:', currentPack);
     loadCards();
   } catch (error) {
     console.error('Error loading packs:', error);
+    alert('Error loading packs. Please ensure the server is running and card-packs.json exists.');
   }
 }
 
@@ -51,15 +68,20 @@ async function loadPacks() {
 document.getElementById('redeal-btn').addEventListener('click', () => {
   const wrappers = document.querySelectorAll('.card-wrapper');
   
-  // Add fly-out animation to existing cards
-  wrappers.forEach(wrapper => {
-    wrapper.classList.add('fly-out');
-  });
-  
-  // Wait for fly-out animation to complete, then load new cards
-  setTimeout(() => {
+  if (wrappers.length > 0) {
+    // Add fly-out animation to existing cards
+    wrappers.forEach(wrapper => {
+      wrapper.classList.add('fly-out');
+    });
+    
+    // Wait for fly-out animation to complete, then load new cards
+    setTimeout(() => {
+      loadCards();
+    }, 600);
+  } else {
+    // No cards yet, just load
     loadCards();
-  }, 600);
+  }
 });
 
 // Add event listeners for deck
@@ -71,10 +93,21 @@ document.getElementById('download-deck-btn').addEventListener('click', downloadD
 async function loadCards() {
   try {
     const response = await fetch(`/api/random-cards/${currentPack}`);
-    cards = await response.json();
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    
+    if (!Array.isArray(data)) {
+      console.error('API did not return an array:', data);
+      throw new Error('Invalid response format');
+    }
+    
+    cards = data;
     renderCards();
   } catch (error) {
     console.error('Error loading cards:', error);
+    alert('Error loading cards. Please check that the server is running and card packs are configured correctly.');
   }
 }
 
@@ -379,11 +412,11 @@ function toggleZoom(wrapper) {
     wrapper.dataset.zoomed = 'true';
     
     // Create darkening overlay to block other clicks
-    // Insert it BEFORE the wrapper in DOM order so wrapper renders on top
+    // Append to body so it's not affected by container styling
     const overlay = document.createElement('div');
     overlay.className = 'zoom-overlay';
     overlay.addEventListener('click', () => toggleZoom(wrapper));
-    //wrapper.parentNode.insertBefore(overlay, wrapper);
+    document.body.appendChild(overlay);
   }
 }
 

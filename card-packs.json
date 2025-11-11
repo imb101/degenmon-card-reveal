@@ -1,21 +1,35 @@
 {
+    "monfanservice": {
+    "name": "Degenmon - Fan Service Pack",
+    "totalCards": 54,
+    "folder": "degenmon-fanservice",
+    "cardBack": "card-back-fs.jpg",
+    "background": "background.jpg",
+    "enabled": true
+  },
   "monstandard": {
     "name": "Degenmon - Standard Pack",
     "totalCards": 41,
     "folder": "degenmon-standard",
-    "cardBack": "card-back.jpg"
+    "cardBack": "card-back.jpg",
+    "background": "background.jpg",
+    "enabled": true
   },
   "monhalloween": {
     "name": "Degenmon - Halloween Pack",
     "totalCards": 41,
     "folder": "degenmon-halloween",
-    "cardBack": "card-back-h.jpg"
+    "cardBack": "card-back-h.jpg",
+    "background": "background.jpg",
+    "enabled": true
   },
   "dtgstandard": {
     "name": "Degen the Gathering - Standard Pack",
     "totalCards": 44,
     "folder": "dtg-standard",
-    "cardBack": "card-back-dtg.jpg"
+    "cardBack": "card-back-dtg.jpg",
+    "background": "background.jpg",
+    "enabled": true
   }
 }
 

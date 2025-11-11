@@ -242,15 +242,14 @@ h1 {
   max-height: 80vh;
 }
 
-/* Overlay to block clicks on other cards when zoomed */
+/* Overlay to block clicks on other cards when zoomed background: rgba(0, 0, 0, 0.6); */
 .zoom-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 1000;
+  height: 100%;  
+  z-index: 500;
   cursor: pointer;
   pointer-events: all;
 }
