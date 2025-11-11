@@ -3,15 +3,70 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Degen-mon Pack Opener</title>
+  <title>Card Reveal</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <div class="deck-info">
+    <h3>My Deck</h3>
+    <div class="deck-stats">
+      <div class="stat-item">
+        <span class="stat-label">Total:</span>
+        <span id="deck-total">0</span>
+      </div>
+      <div class="stat-item legendary">
+        <span class="stat-label">Legendary:</span>
+        <span id="deck-legendary">0</span>
+      </div>
+      <div class="stat-item epic">
+        <span class="stat-label">Epic:</span>
+        <span id="deck-epic">0</span>
+      </div>
+      <div class="stat-item rare">
+        <span class="stat-label">Rare:</span>
+        <span id="deck-rare">0</span>
+      </div>
+      <div class="stat-item common">
+        <span class="stat-label">Common:</span>
+        <span id="deck-common">0</span>
+      </div>
+    </div>
+    <button id="view-deck-btn" class="view-deck-btn">View Deck</button>
+    <button id="download-deck-btn" class="download-deck-btn">Download Deck</button>
+  </div>
+  
+  <div class="pack-selector">
+    <h3>Select Pack</h3>
+    <select id="pack-select" class="pack-select">
+      <option value="">Loading packs...</option>
+    </select>
+  </div>
+  
   <div class="container">
-    <h1>Degen-mon Pack Opener</h1>
+    <h1>Card Reveal</h1>
     <button id="redeal-btn" class="redeal-btn">Re-Deal Cards</button>
     <div id="card-container" class="card-container"></div>
   </div>
+  
+  <div id="deck-modal" class="deck-modal">
+    <div class="deck-modal-content">
+      <div class="deck-modal-header">
+        <h2>My Deck</h2>
+        <button id="close-deck-btn" class="close-deck-btn">&times;</button>
+      </div>
+      <div class="deck-filter">
+        <button class="filter-btn active" data-rarity="all">All</button>
+        <button class="filter-btn legendary" data-rarity="legendary">Legendary</button>
+        <button class="filter-btn epic" data-rarity="epic">Epic</button>
+        <button class="filter-btn rare" data-rarity="rare">Rare</button>
+        <button class="filter-btn common" data-rarity="common">Common</button>
+      </div>
+      <div id="deck-cards-container" class="deck-cards-container"></div>
+    </div>
+  </div>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
